@@ -85,7 +85,7 @@ public class MergeToolServiceTests
         await _mergeToolService.GitMergeInto(TargetBranch);
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
-        _consoleLogger.Received().Info($"Merging changes from current branch to '{TargetBranch}' branch...");
+        _consoleLogger.Received().Info($"Merging changes from '{OriginalBranch}' to '{TargetBranch}' branch...");
         _consoleLogger.Received().Success($"Merged the '{OriginalBranch}' branch into '{TargetBranch}' branch.");
         await CurrentBranchShouldBe(OriginalBranch);
     }
@@ -98,7 +98,7 @@ public class MergeToolServiceTests
         await _mergeToolService.GitMergeIntoPush(TargetBranch);
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
-        _consoleLogger.Received().Info($"Merging changes from current branch to '{TargetBranch}' branch...");
+        _consoleLogger.Received().Info($"Merging changes from '{OriginalBranch}' to '{TargetBranch}' branch...");
         _consoleLogger.Received().Info($"Pushing changes to '{TargetBranch}' branch...");
         _consoleLogger.Received().Success($"Merged the '{OriginalBranch}' branch into '{TargetBranch}' branch.");
         await CurrentBranchShouldBe(OriginalBranch);
