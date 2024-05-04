@@ -39,6 +39,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
+        shell: bash
         run: |
           tag=$(git describe --tags --abbrev=0)
           release_name="MergeTool-$tag-${{ matrix.target }}"
