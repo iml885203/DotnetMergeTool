@@ -45,9 +45,8 @@ jobs:
           release_name="MergeTool-$tag-${{ matrix.target }}"
           
           # Build
-          cd MergeTool
-          dotnet build --configuration Release --no-restore 
-          dotnet publish -c Release -r ${{ matrix.target }} --self-contained true -o "$release_name"
+          dotnet build MergeTool/MergeTool.csproj --configuration Release --no-restore 
+          dotnet publish MergeTool/MergeTool.csproj -c Release -r ${{ matrix.target }} --self-contained true -o "$release_name"
           
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
