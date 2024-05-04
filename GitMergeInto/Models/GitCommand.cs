@@ -60,6 +60,7 @@ public static class GitCommand
         var process = await Run("merge", originalBranch);
         if (process.IsFailed())
         {
+            await Run("merge", "--abort");
             if (process.GetTrimStandardOutput().Contains("CONFLICT"))
             {
                 throw new GitCommandFailed($"Merge conflict detected for branch '{targetBranch}'.");
