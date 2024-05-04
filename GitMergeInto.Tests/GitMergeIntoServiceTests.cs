@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using FluentAssertions;
 using GitMergeInto.Interfaces;
 using GitMergeInto.Services;
 using NSubstitute;
@@ -39,6 +40,7 @@ public class GitMergeIntoServiceTests
         await _gitMergeIntoService.GitMergeInto(TargetBranch);
 
         _consoleLogger.Received().Error("There are uncommitted changes in the current branch.");
+        await CurrentBranchShouldBe(OriginalBranch);
     }
 
     [Test]
@@ -47,6 +49,7 @@ public class GitMergeIntoServiceTests
         await _gitMergeIntoService.GitMergeInto(OriginalBranch);
 
         _consoleLogger.Received().Error($"Cannot merge the '{OriginalBranch}' into '{OriginalBranch}' branch.");
+        await CurrentBranchShouldBe(OriginalBranch);
     }
 
     [Test]
@@ -57,6 +60,7 @@ public class GitMergeIntoServiceTests
 
         _consoleLogger.Received().Info($"Pulling changes from '{targetBranch}' branch...");
         _consoleLogger.Received().Error($"Failed to fetch the '{targetBranch}' branch.");
+        await CurrentBranchShouldBe(OriginalBranch);
     }
 
     [Test]
@@ -70,6 +74,7 @@ public class GitMergeIntoServiceTests
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
         _consoleLogger.Received().Error($"Merge conflict detected for branch '{TargetBranch}'.");
+        await CurrentBranchShouldBe(OriginalBranch);
     }
 
     [Test]
@@ -82,6 +87,12 @@ public class GitMergeIntoServiceTests
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
         _consoleLogger.Received().Info($"Merging changes from current branch to '{TargetBranch}' branch...");
         _consoleLogger.Received().Success($"Merged the '{OriginalBranch}' branch into '{TargetBranch}' branch.");
+        await CurrentBranchShouldBe(OriginalBranch);
+    }
+
+    private static async Task CurrentBranchShouldBe(string originalBranch)
+    {
+        (await RunCommand("git", "branch --show-current")).Trim().Should().Be(originalBranch);
     }
 
     private static async Task GivenFileOnOriginalBranch(string fileName, string content)
@@ -133,7 +144,7 @@ public class GitMergeIntoServiceTests
         await RunCommand("git", "checkout -b develop");
     }
 
-    private static async Task RunCommand(string command, params string?[] args)
+    private static async Task<string> RunCommand(string command, params string?[] args)
     {
         Console.WriteLine($"> {command} " + string.Join(" ", args));
         var startInfo = new ProcessStartInfo
@@ -158,5 +169,7 @@ public class GitMergeIntoServiceTests
         var stderr = await process.StandardError.ReadToEndAsync();
         if (!string.IsNullOrWhiteSpace(stderr))
             Console.WriteLine(stderr);
+
+        return $"{stdout}{stderr}";
     }
 }
