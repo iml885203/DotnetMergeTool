@@ -8,6 +8,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>MergeTool</RootNamespace>
         <PublishSingleFile>true</PublishSingleFile>
+        <PublishTrimmed>true</PublishTrimmed>
     </PropertyGroup>
 
     <ItemGroup>
