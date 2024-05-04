@@ -1,10 +1,11 @@
 using GitMergeInto.Enums;
+using GitMergeInto.Interfaces;
 
 namespace GitMergeInto.Models;
 
-public static class ConsoleLogger
+public class ConsoleLogger : IConsoleLogger
 {
-    public static void WriteMessage(string message, MessageType messageType)
+    private void WriteMessage(string message, MessageType messageType)
     {
         switch (messageType)
         {
@@ -29,22 +30,22 @@ public static class ConsoleLogger
         Console.ResetColor();
     }
 
-    public static void Info(string message)
+    public void Info(string message)
     {
         WriteMessage($"[Info] {message}", MessageType.Info);
     }
 
-    public static void Warning(string message)
+    public void Warning(string message)
     {
         WriteMessage($"[Warning] {message}", MessageType.Warning);
     }
 
-    public static void Error(string message)
+    public void Error(string message)
     {
         WriteMessage($"[Error] {message}", MessageType.Error);
     }
 
-    public static void Success(string message)
+    public void Success(string message)
     {
         WriteMessage($"[Success] {message}", MessageType.Success);
     }

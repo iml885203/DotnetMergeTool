@@ -72,7 +72,7 @@ public static class GitCommand
 
     public static async Task<string> GetOriginalBranch()
     {
-        var originBranchProcess = await Run("rev-parse", "--abbrev-ref", "HEAD");
+        var originBranchProcess = await Run("branch", "--show-current");
         var originalBranch = originBranchProcess.GetTrimStandardOutput();
         return originalBranch;
     }

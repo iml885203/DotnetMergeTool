@@ -1,0 +1,7 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6247cab3_002D62b3_002D49ae_002Db867_002D57411ce763a6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="should_be_merge_into" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD::net8.0::GitMergeInto.Tests.GitMergeIntoServiceTests.should_be_merge_into&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD::net8.0::GitMergeInto.Tests.GitMergeIntoServiceTests.when_same_branch_should_throw_error&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

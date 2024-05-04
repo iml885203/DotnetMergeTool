@@ -1,10 +1,11 @@
+using GitMergeInto.Interfaces;
 using GitMergeInto.Models;
 
 namespace GitMergeInto.Services;
 
-public static class GitMergeIntoService
+public class GitMergeIntoService(IConsoleLogger consoleLogger)
 {
-    public static async Task GitMergeInto(string targetBranch)
+    public async Task GitMergeInto(string targetBranch)
     {
         var originalBranch = await GitCommand.GetOriginalBranch();
 
@@ -14,27 +15,27 @@ public static class GitMergeIntoService
         }
         catch (GitCommandFailed e)
         {
-            ConsoleLogger.Error(e.ErrorMessage);
+            consoleLogger.Error(e.ErrorMessage);
             await GitCommand.Run("checkout", originalBranch);
         }
     }
 
-    private static async Task GitMergeIntoFlow(string originalBranch, string targetBranch)
+    private async Task GitMergeIntoFlow(string originalBranch, string targetBranch)
     {
         if (originalBranch == targetBranch)
             throw new GitCommandFailed($"Cannot merge the '{originalBranch}' into '{targetBranch}' branch.");
 
         await GitCommand.CheckUncommitted();
 
-        ConsoleLogger.Info($"Pulling changes from '{targetBranch}' branch...");
+        consoleLogger.Info($"Pulling changes from '{targetBranch}' branch...");
         await GitCommand.Checkout(targetBranch);
         await GitCommand.Fetch(targetBranch);
         await GitCommand.ResetHard(targetBranch);
 
-        ConsoleLogger.Info($"Merging changes from current branch to '{targetBranch}' branch...");
+        consoleLogger.Info($"Merging changes from current branch to '{targetBranch}' branch...");
         await GitCommand.Merge(originalBranch, targetBranch);
         await GitCommand.Checkout(originalBranch);
 
-        ConsoleLogger.Success($"Merged changes from current branch to '{targetBranch}' branch.");
+        consoleLogger.Success($"Merged changes from current branch to '{targetBranch}' branch.");
     }
 }
