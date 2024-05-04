@@ -61,4 +61,4 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v2
         with:
-          files: "MergeTool*""
+          files: "MergeTool*"
