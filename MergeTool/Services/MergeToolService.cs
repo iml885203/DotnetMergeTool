@@ -23,6 +23,7 @@ public class MergeToolService(IConsoleLogger consoleLogger)
 
     public async Task GitMergeIntoPush(string targetBranch, bool verbose = false)
     {
+        consoleLogger.SetEnableVerbose(verbose);
         var originalBranch = await GitCommand.GetOriginalBranch();
 
         try
