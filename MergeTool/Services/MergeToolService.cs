@@ -5,8 +5,9 @@ namespace MergeTool.Services;
 
 public class MergeToolService(IConsoleLogger consoleLogger)
 {
-    public async Task GitMergeInto(string targetBranch)
+    public async Task GitMergeInto(string targetBranch, bool verbose = false)
     {
+        consoleLogger.SetEnableVerbose(verbose);
         var originalBranch = await GitCommand.GetOriginalBranch();
 
         try
@@ -20,7 +21,7 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         }
     }
 
-    public async Task GitMergeIntoPush(string targetBranch)
+    public async Task GitMergeIntoPush(string targetBranch, bool verbose = false)
     {
         var originalBranch = await GitCommand.GetOriginalBranch();
 

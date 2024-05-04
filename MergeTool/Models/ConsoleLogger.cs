@@ -5,6 +5,8 @@ namespace MergeTool.Models;
 
 public class ConsoleLogger : IConsoleLogger
 {
+    private bool _enableVerbose = false;
+
     private void WriteMessage(string message, MessageType messageType)
     {
         switch (messageType)
@@ -55,6 +57,12 @@ public class ConsoleLogger : IConsoleLogger
 
     public void Verbose(string message)
     {
+        if (!_enableVerbose) return;
         WriteMessage($"[Verbose] {message}", MessageType.Verbose);
+    }
+
+    public void SetEnableVerbose(bool enabled)
+    {
+        _enableVerbose = enabled;
     }
 }
