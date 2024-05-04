@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitMergeInto", "GitMergeInto\GitMergeInto.csproj", "{2EE3F573-66E6-425E-820E-4535834871DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitMergeInto.Tests", "GitMergeInto.Tests\GitMergeInto.Tests.csproj", "{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EE3F573-66E6-425E-820E-4535834871DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE3F573-66E6-425E-820E-4535834871DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE3F573-66E6-425E-820E-4535834871DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE3F573-66E6-425E-820E-4535834871DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
