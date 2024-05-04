@@ -9,6 +9,7 @@ namespace MergeTool
         public static async Task<int> Main(string[] args)
         {
             var serviceProvider = StartUp.ConfigureServices();
+            var mergeToolService = serviceProvider.GetService<MergeToolService>()!;
 
             var branchArgument = new Argument<string>
             (
@@ -16,11 +17,15 @@ namespace MergeTool
                 description: "The branch argument"
             );
 
-            var rootCommand = new RootCommand { branchArgument };
+            var rootCommand = new RootCommand("Merge Tool");
 
-            var gitMergeIntoService = serviceProvider.GetService<MergeToolService>()!;
-            rootCommand.SetHandler(gitMergeIntoService.GitMergeInto, branchArgument);
+            var gmiCommand = new Command("gmi", "Merge into the target branch");
+            gmiCommand.SetHandler(mergeToolService.GitMergeInto, branchArgument);
+            rootCommand.Add(gmiCommand);
 
+            var gmipCommand = new Command("gmip", "Merge into the target branch and push the changes");
+            gmipCommand.SetHandler(mergeToolService.GitMergeIntoPush, branchArgument);
+            rootCommand.Add(gmipCommand);
 
             return await rootCommand.InvokeAsync(args);
         }

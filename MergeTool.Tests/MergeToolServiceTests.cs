@@ -12,8 +12,8 @@ public class MergeToolServiceTests
     private const string OriginalBranch = "develop";
     private const string TargetBranch = "main";
     private IConsoleLogger _consoleLogger;
-    private MergeToolService _mergeToolService;
     private string _localRepoDirectory;
+    private MergeToolService _mergeToolService;
     private string _previousWorkingDirectory;
     private string _sandboxDirectory;
 
@@ -86,6 +86,20 @@ public class MergeToolServiceTests
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
         _consoleLogger.Received().Info($"Merging changes from current branch to '{TargetBranch}' branch...");
+        _consoleLogger.Received().Success($"Merged the '{OriginalBranch}' branch into '{TargetBranch}' branch.");
+        await CurrentBranchShouldBe(OriginalBranch);
+    }
+
+    [Test]
+    public async Task should_be_merge_into_target_and_push()
+    {
+        await GivenFileOnOriginalBranch("new-file.txt", "This is a new file!");
+
+        await _mergeToolService.GitMergeIntoPush(TargetBranch);
+
+        _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
+        _consoleLogger.Received().Info($"Merging changes from current branch to '{TargetBranch}' branch...");
+        _consoleLogger.Received().Info($"Pushing changes to '{TargetBranch}' branch...");
         _consoleLogger.Received().Success($"Merged the '{OriginalBranch}' branch into '{TargetBranch}' branch.");
         await CurrentBranchShouldBe(OriginalBranch);
     }

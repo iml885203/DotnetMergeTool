@@ -79,4 +79,13 @@ public static class GitCommand
         var originBranchProcess = await Run("branch", "--show-current");
         return originBranchProcess.GetTrimStandardOutput();
     }
+
+    public static async Task<string> Push(string targetBranch)
+    {
+        var process = await Run("push", "origin", targetBranch);
+        if (process.IsFailed())
+            throw new GitCommandFailed($"Failed to push the '{targetBranch}' branch.");
+
+        return process.GetOutput();
+    }
 }
