@@ -1,21 +1,64 @@
-name: Main
+name: Publish
 
 on:
   push:
     tags:
       - "v*.*.*"
 
+env:
+  DOTNET_VERSION: 8.0.x
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  release:
+    name: Release
+    strategy:
+      matrix:
+        kind: [ 'linux', 'windows', 'macOS' ]
+        include:
+          - kind: linux
+            os: ubuntu-latest
+            target: linux-x64
+          - kind: windows
+            os: windows-latest
+            target: win-x64
+          - kind: macOS
+            os: macos-latest
+            target: osx-x64
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Install dependencies
+        run: dotnet restore
+
       - name: Build
-        run: echo ${{ github.sha }} > Release.txt
-      - name: Test
-        run: cat Release.txt
-      - name: Release
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          release_name="MergeTool-$tag-${{ matrix.target }}"
+          
+          # Build
+          cd MergeTool
+          dotnet build --configuration Release --no-restore 
+          dotnet publish -c Release -r ${{ matrix.target }} --self-contained true -o "$release_name"
+          
+          # Pack files
+          if [ "${{ matrix.target }}" == "win-x64" ]; then
+            7z a -tzip "${release_name}.zip" "./${release_name}/*"
+          else
+            tar czvf "${release_name}.tar.gz" "$release_name"
+          fi
+          
+          # Delete output directory
+          rm -r $release_name
+
+      - name: Publish
         uses: softprops/action-gh-release@v2
         with:
-          files: Release.txt
+          files: "MergeTool*""
