@@ -29,13 +29,13 @@ public class GitMergeIntoService(IConsoleLogger consoleLogger)
 
         consoleLogger.Info($"Pulling changes from '{targetBranch}' branch...");
         await GitCommand.Checkout(targetBranch);
-        await GitCommand.Fetch(targetBranch);
-        await GitCommand.ResetHard(targetBranch);
+        consoleLogger.Verbose(await GitCommand.Fetch(targetBranch));
+        consoleLogger.Verbose(await GitCommand.ResetHard(targetBranch));
 
         consoleLogger.Info($"Merging changes from current branch to '{targetBranch}' branch...");
-        await GitCommand.Merge(originalBranch, targetBranch);
+        consoleLogger.Verbose(await GitCommand.Merge(originalBranch, targetBranch));
         await GitCommand.Checkout(originalBranch);
 
-        consoleLogger.Success($"Merged changes from current branch to '{targetBranch}' branch.");
+        consoleLogger.Success($"Merged the '{originalBranch}' branch into '{targetBranch}' branch.");
     }
 }

@@ -15,4 +15,12 @@ public class GitProcess
     {
         return string.IsNullOrEmpty(StandardOutput) ? string.Empty : StandardOutput.Trim();
     }
+
+    public string GetOutput()
+    {
+        var output = string.IsNullOrEmpty(StandardOutput) ? string.Empty : StandardOutput;
+        var error = string.IsNullOrEmpty(StandardError) ? string.Empty : StandardError;
+
+        return $"{output}{error}";
+    }
 }

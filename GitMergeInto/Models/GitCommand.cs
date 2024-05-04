@@ -28,38 +28,39 @@ public static class GitCommand
 
     public static async Task CheckUncommitted()
     {
-        var diffProcess = await Run("diff", "--quiet");
-        if (diffProcess.IsFailed())
+        var process = await Run("status", "--porcelain");
+        var output = process.GetTrimStandardOutput();
+        if (!string.IsNullOrEmpty(output))
             throw new GitCommandFailed("There are uncommitted changes in the current branch.");
     }
 
-    public static async Task Checkout(string targetBranch)
+    public static async Task<string> Checkout(string targetBranch)
     {
-        await Run("checkout", targetBranch);
+        return (await Run("checkout", targetBranch)).GetOutput();
     }
 
-    public static async Task Fetch(string targetBranch)
+    public static async Task<string> Fetch(string targetBranch)
     {
-        var fetchProcess = await Run("fetch", "origin", targetBranch);
-        Console.Write(fetchProcess.StandardOutput);
-        Console.Write(fetchProcess.StandardError);
-        if (fetchProcess.IsFailed())
+        var process = await Run("fetch", "origin", targetBranch);
+        if (process.IsFailed())
             throw new GitCommandFailed($"Failed to fetch the '{targetBranch}' branch.");
+        return process.GetOutput();
     }
 
-    public static async Task ResetHard(string targetBranch)
+    public static async Task<string> ResetHard(string targetBranch)
     {
-        var resetProcess = await Run("reset", "--hard", $"origin/{targetBranch}");
-        if (resetProcess.IsFailed())
+        var process = await Run("reset", "--hard", $"origin/{targetBranch}");
+        if (process.IsFailed())
             throw new GitCommandFailed($"Failed to reset the '{targetBranch}' branch.");
+        return process.GetOutput();
     }
 
-    public static async Task Merge(string originalBranch, string targetBranch)
+    public static async Task<string> Merge(string originalBranch, string targetBranch)
     {
-        var mergeProcess = await Run("merge", originalBranch);
-        if (mergeProcess.IsFailed())
+        var process = await Run("merge", originalBranch);
+        if (process.IsFailed())
         {
-            if (mergeProcess.GetTrimStandardOutput().Contains("CONFLICT"))
+            if (process.GetTrimStandardOutput().Contains("CONFLICT"))
             {
                 throw new GitCommandFailed($"Merge conflict detected for branch '{targetBranch}'.");
             }
@@ -68,12 +69,13 @@ public static class GitCommand
                 throw new GitCommandFailed($"Merge failed for branch '{targetBranch}'.");
             }
         }
+
+        return process.GetOutput();
     }
 
     public static async Task<string> GetOriginalBranch()
     {
         var originBranchProcess = await Run("branch", "--show-current");
-        var originalBranch = originBranchProcess.GetTrimStandardOutput();
-        return originalBranch;
+        return originBranchProcess.GetTrimStandardOutput();
     }
 }

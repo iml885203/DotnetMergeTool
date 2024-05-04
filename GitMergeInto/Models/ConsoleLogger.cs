@@ -21,6 +21,9 @@ public class ConsoleLogger : IConsoleLogger
             case MessageType.Success:
                 Console.ForegroundColor = ConsoleColor.Green;
                 break;
+            case MessageType.Verbose:
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                break;
             default:
                 Console.ResetColor();
                 break;
@@ -48,5 +51,10 @@ public class ConsoleLogger : IConsoleLogger
     public void Success(string message)
     {
         WriteMessage($"[Success] {message}", MessageType.Success);
+    }
+
+    public void Verbose(string message)
+    {
+        WriteMessage($"[Verbose] {message}", MessageType.Verbose);
     }
 }
