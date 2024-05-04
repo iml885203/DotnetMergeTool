@@ -22,7 +22,7 @@ public class ConsoleLogger : IConsoleLogger
                 Console.ForegroundColor = ConsoleColor.Green;
                 break;
             case MessageType.Verbose:
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.ForegroundColor = ConsoleColor.Gray;
                 break;
             default:
                 Console.ResetColor();
