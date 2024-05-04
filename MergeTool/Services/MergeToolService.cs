@@ -49,7 +49,7 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         consoleLogger.Verbose(await GitCommand.Fetch(targetBranch));
         consoleLogger.Verbose(await GitCommand.ResetHard(targetBranch));
 
-        consoleLogger.Info($"Merging changes from current branch to '{targetBranch}' branch...");
+        consoleLogger.Info($"Merging changes from '{originalBranch}' to '{targetBranch}' branch...");
         consoleLogger.Verbose(await GitCommand.Merge(originalBranch, targetBranch));
         await GitCommand.Checkout(originalBranch);
 
@@ -68,7 +68,7 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         consoleLogger.Verbose(await GitCommand.Fetch(targetBranch));
         consoleLogger.Verbose(await GitCommand.ResetHard(targetBranch));
 
-        consoleLogger.Info($"Merging changes from current branch to '{targetBranch}' branch...");
+        consoleLogger.Info($"Merging changes from '{originalBranch}' to '{targetBranch}' branch...");
         consoleLogger.Verbose(await GitCommand.Merge(originalBranch, targetBranch));
 
         consoleLogger.Info($"Pushing changes to '{targetBranch}' branch...");
