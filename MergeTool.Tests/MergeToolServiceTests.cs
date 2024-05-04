@@ -1,18 +1,18 @@
 using System.Diagnostics;
 using FluentAssertions;
-using GitMergeInto.Interfaces;
-using GitMergeInto.Services;
+using MergeTool.Interfaces;
+using MergeTool.Services;
 using NSubstitute;
 
-namespace GitMergeInto.Tests;
+namespace MergeTool.Tests;
 
 [TestFixture]
-public class GitMergeIntoServiceTests
+public class MergeToolServiceTests
 {
     private const string OriginalBranch = "develop";
     private const string TargetBranch = "main";
     private IConsoleLogger _consoleLogger;
-    private GitMergeIntoService _gitMergeIntoService;
+    private MergeToolService _mergeToolService;
     private string _localRepoDirectory;
     private string _previousWorkingDirectory;
     private string _sandboxDirectory;
@@ -23,7 +23,7 @@ public class GitMergeIntoServiceTests
         await GivenGitSandbox();
 
         _consoleLogger = Substitute.For<IConsoleLogger>();
-        _gitMergeIntoService = new GitMergeIntoService(_consoleLogger);
+        _mergeToolService = new MergeToolService(_consoleLogger);
     }
 
     [TearDown]
@@ -37,7 +37,7 @@ public class GitMergeIntoServiceTests
     {
         await RunCommand("touch", "file.txt");
 
-        await _gitMergeIntoService.GitMergeInto(TargetBranch);
+        await _mergeToolService.GitMergeInto(TargetBranch);
 
         _consoleLogger.Received().Error("There are uncommitted changes in the current branch.");
         await CurrentBranchShouldBe(OriginalBranch);
@@ -46,7 +46,7 @@ public class GitMergeIntoServiceTests
     [Test]
     public async Task when_same_branch()
     {
-        await _gitMergeIntoService.GitMergeInto(OriginalBranch);
+        await _mergeToolService.GitMergeInto(OriginalBranch);
 
         _consoleLogger.Received().Error($"Cannot merge the '{OriginalBranch}' into '{OriginalBranch}' branch.");
         await CurrentBranchShouldBe(OriginalBranch);
@@ -56,7 +56,7 @@ public class GitMergeIntoServiceTests
     public async Task when_fetch_fail()
     {
         const string targetBranch = "non_existent";
-        await _gitMergeIntoService.GitMergeInto(targetBranch);
+        await _mergeToolService.GitMergeInto(targetBranch);
 
         _consoleLogger.Received().Info($"Pulling changes from '{targetBranch}' branch...");
         _consoleLogger.Received().Error($"Failed to fetch the '{targetBranch}' branch.");
@@ -70,7 +70,7 @@ public class GitMergeIntoServiceTests
         await GivenFileOnTargetBranch(fileName, "Hello, World!");
         await GivenFileOnOriginalBranch(fileName, "This is a conflict!");
 
-        await _gitMergeIntoService.GitMergeInto(TargetBranch);
+        await _mergeToolService.GitMergeInto(TargetBranch);
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
         _consoleLogger.Received().Error($"Merge conflict detected for branch '{TargetBranch}'.");
@@ -82,7 +82,7 @@ public class GitMergeIntoServiceTests
     {
         await GivenFileOnOriginalBranch("new-file.txt", "This is a new file!");
 
-        await _gitMergeIntoService.GitMergeInto(TargetBranch);
+        await _mergeToolService.GitMergeInto(TargetBranch);
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
         _consoleLogger.Received().Info($"Merging changes from current branch to '{TargetBranch}' branch...");

@@ -1,4 +1,4 @@
-namespace GitMergeInto.Enums;
+namespace MergeTool.Enums;
 
 public enum MessageType
 {

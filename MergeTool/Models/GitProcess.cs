@@ -1,4 +1,4 @@
-namespace GitMergeInto.Models;
+namespace MergeTool.Models;
 
 public class GitProcess
 {

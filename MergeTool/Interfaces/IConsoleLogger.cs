@@ -1,4 +1,4 @@
-namespace GitMergeInto.Interfaces;
+namespace MergeTool.Interfaces;
 
 public interface IConsoleLogger
 {

@@ -1,8 +1,8 @@
 ﻿using System.CommandLine;
-using GitMergeInto.Services;
+using MergeTool.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GitMergeInto
+namespace MergeTool
 {
     class Program
     {
@@ -18,7 +18,7 @@ namespace GitMergeInto
 
             var rootCommand = new RootCommand { branchArgument };
 
-            var gitMergeIntoService = serviceProvider.GetService<GitMergeIntoService>()!;
+            var gitMergeIntoService = serviceProvider.GetService<MergeToolService>()!;
             rootCommand.SetHandler(gitMergeIntoService.GitMergeInto, branchArgument);
 
 

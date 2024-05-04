@@ -1,5 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/Users/logan/Library/Caches/JetBrains/Rider2024.1/resharper-host/temp/Rider/vAny/CoverageData/_DotnetGitMergeInto.-3681816/Snapshot/snapshot.utdcvr</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=26cf576c_002D1228_002D4ed2_002Da265_002D1ea81ddf9a74/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="when_merge_conflict" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Solution /&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/Users/logan/Library/Caches/JetBrains/Rider2024.1/resharper-host/temp/Rider/vAny/CoverageData/_DotnetGitMergeInto.-3681816/Snapshot/snapshot.utdcvr</s:String></wpf:ResourceDictionary>

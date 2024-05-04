@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitMergeInto", "GitMergeInto\GitMergeInto.csproj", "{2EE3F573-66E6-425E-820E-4535834871DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeTool", "MergeTool\MergeTool.csproj", "{2EE3F573-66E6-425E-820E-4535834871DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitMergeInto.Tests", "GitMergeInto.Tests\GitMergeInto.Tests.csproj", "{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeTool.Tests", "MergeTool.Tests\MergeTool.Tests.csproj", "{0FA7EFFB-95AA-4CDA-91BE-C5CF7C14E5AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

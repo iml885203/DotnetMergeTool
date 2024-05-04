@@ -1,7 +1,7 @@
-using GitMergeInto.Enums;
-using GitMergeInto.Interfaces;
+using MergeTool.Enums;
+using MergeTool.Interfaces;
 
-namespace GitMergeInto.Models;
+namespace MergeTool.Models;
 
 public class ConsoleLogger : IConsoleLogger
 {

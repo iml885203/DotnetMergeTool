@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace GitMergeInto.Models;
+namespace MergeTool.Models;
 
 public static class GitCommand
 {

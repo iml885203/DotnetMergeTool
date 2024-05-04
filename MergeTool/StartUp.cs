@@ -1,9 +1,9 @@
-using GitMergeInto.Interfaces;
-using GitMergeInto.Models;
-using GitMergeInto.Services;
+using MergeTool.Interfaces;
+using MergeTool.Models;
+using MergeTool.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GitMergeInto;
+namespace MergeTool;
 
 internal static class StartUp
 {
@@ -12,7 +12,7 @@ internal static class StartUp
         var services = new ServiceCollection();
 
         services.AddSingleton<IConsoleLogger, ConsoleLogger>();
-        services.AddSingleton<GitMergeIntoService>();
+        services.AddSingleton<MergeToolService>();
 
         return services.BuildServiceProvider();
     }

@@ -1,9 +1,9 @@
-using GitMergeInto.Interfaces;
-using GitMergeInto.Models;
+using MergeTool.Interfaces;
+using MergeTool.Models;
 
-namespace GitMergeInto.Services;
+namespace MergeTool.Services;
 
-public class GitMergeIntoService(IConsoleLogger consoleLogger)
+public class MergeToolService(IConsoleLogger consoleLogger)
 {
     public async Task GitMergeInto(string targetBranch)
     {
