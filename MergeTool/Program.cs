@@ -19,11 +19,17 @@ namespace MergeTool
 
             var rootCommand = new RootCommand("Merge Tool");
 
-            var gmiCommand = new Command("gmi", "Merge into the target branch");
+            var gmiCommand = new Command("gmi", "Merge into the target branch")
+            {
+                branchArgument
+            };
             gmiCommand.SetHandler(mergeToolService.GitMergeInto, branchArgument);
             rootCommand.Add(gmiCommand);
 
-            var gmipCommand = new Command("gmip", "Merge into the target branch and push the changes");
+            var gmipCommand = new Command("gmip", "Merge into the target branch and push the changes")
+            {
+                branchArgument
+            };
             gmipCommand.SetHandler(mergeToolService.GitMergeIntoPush, branchArgument);
             rootCommand.Add(gmipCommand);
 
