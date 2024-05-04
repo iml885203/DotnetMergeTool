@@ -41,8 +41,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          tag=$(git describe --tags --abbrev=0)
-          release_name="MergeTool-$tag-${{ matrix.target }}"
+          release_name="MergeTool-${{ matrix.target }}"
           
           # Build
           dotnet build MergeTool/MergeTool.csproj --configuration Release --no-restore 
