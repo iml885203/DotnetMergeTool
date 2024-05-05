@@ -26,8 +26,8 @@ Git merge tool
 
 ## Usage
 ```bash
-MergeTool gmi {branch}
-MergeTool gmip {branch}
+MergeTool {branch}
+MergeTool {branch} --push
 ```
 
 Or you can use the alias:
