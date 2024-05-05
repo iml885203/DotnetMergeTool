@@ -22,6 +22,12 @@ MergeTool gmi {branch}
 MergeTool gmip {branch}
 ```
 
+Or you can use the alias:
+```bash
+gmi {branch}
+gmip {branch}
+```
+
 ![](./readme/gmip-demo.gif)
 
 ## Installation
