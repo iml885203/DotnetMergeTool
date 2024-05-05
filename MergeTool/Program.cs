@@ -52,11 +52,11 @@ namespace MergeTool
 
             if (needPush)
             {
-                await _mergeToolService!.GitMergeInto(targetBranch, showVerbose);
+                await _mergeToolService!.GitMergeIntoPush(targetBranch, showVerbose);
             }
             else
             {
-                await _mergeToolService!.GitMergeIntoPush(targetBranch, showVerbose);
+                await _mergeToolService!.GitMergeInto(targetBranch, showVerbose);
             }
         }
 
