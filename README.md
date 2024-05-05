@@ -1,5 +1,7 @@
 # Merge Tool
 
+Git merge tool
+
 ![](./readme/gmip-demo.gif)
 
 ## Table of Contents
