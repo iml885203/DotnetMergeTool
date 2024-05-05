@@ -2,7 +2,7 @@
 
 Git merge tool
 
-![](./readme/demo.png)
+![](./readme/demo.gif)
 
 ![](./readme/gmip-demo.gif)
 
