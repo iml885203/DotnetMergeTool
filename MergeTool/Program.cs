@@ -60,6 +60,8 @@ namespace MergeTool
         private static async Task HandleCommand(string targetBranch, bool needPush, bool showVerbose)
         {
             // TODO: handle .git not found
+            // TODO: handle target branch not found
+            // TODO: show verbose output when error occurs
             if (string.IsNullOrEmpty(targetBranch))
             {
                 targetBranch = await PromptBranch();
