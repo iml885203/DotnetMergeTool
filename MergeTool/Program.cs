@@ -1,4 +1,6 @@
 ﻿using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
 using MergeTool.Models;
 using MergeTool.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,7 +42,19 @@ namespace MergeTool
 
             rootCommand.SetHandler(HandleCommand, BranchArgument, PushOption, VerboseOption);
 
-            return await rootCommand.InvokeAsync(args);
+            var builder = new CommandLineBuilder(rootCommand);
+            builder.UseVersionOption(["-V", "--version"])
+                .UseHelp()
+                .UseEnvironmentVariableDirective()
+                .UseParseDirective()
+                .UseSuggestDirective()
+                .RegisterWithDotnetSuggest()
+                .UseTypoCorrections()
+                .UseParseErrorReporting()
+                .UseExceptionHandler()
+                .CancelOnProcessTermination();
+
+            return await builder.Build().InvokeAsync(args);
         }
 
         private static async Task HandleCommand(string targetBranch, bool needPush, bool showVerbose)
