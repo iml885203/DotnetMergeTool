@@ -15,7 +15,7 @@ cd autocomplete
 pnpm install
 
 # Download MergeTool.ts to src folder
-curl -fsSL -o src/MergeTool.ts https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/src/MergeTool.ts
+curl -fsSL -o src/MergeTool.ts https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/q-autocomplete/MergeTool.ts
 
 # Turn on "dev mode"
 pnpm dev
