@@ -1,5 +1,7 @@
 # Merge Tool
 
+![](./readme/gmip-demo.gif)
+
 ## Table of Contents
 
 <!-- toc -->
@@ -28,8 +30,6 @@ gmi {branch}
 gmip {branch}
 ```
 
-![](./readme/gmip-demo.gif)
-
 ## Installation
 
 ### Linux
@@ -43,6 +43,9 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeToo
 ```
 
 ### Windows
+
+Open PowerShell as Administrator and run the following command:
+
 ```powershell
 powershell -command "& {Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/tools/install.ps1'))}"
 ```
