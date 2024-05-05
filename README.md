@@ -43,7 +43,9 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeToo
 ```
 
 ### Windows
-> Todo...
+```powershell
+powershell -command "& {Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/tools/install.ps1'))}"
+```
 
 ## Uninstall
 
@@ -58,4 +60,6 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeToo
 ```
 
 ### Windows
-> Todo...
+```powershell
+powershell -command "& {Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/tools/uninstall.ps1'))}"
+```
