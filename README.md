@@ -41,7 +41,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeToo
 
 ### MacOS
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/tools/install-macos.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/tools/install-oxs.sh)"
 ```
 
 ### Windows
