@@ -77,4 +77,10 @@ public class MergeToolService(IConsoleLogger consoleLogger)
 
         consoleLogger.Success($"Merged the '{originalBranch}' branch into '{targetBranch}' branch.");
     }
+
+    public async Task TestInfo()
+    {
+        consoleLogger.Info("1");
+        consoleLogger.Info("2");
+    }
 }

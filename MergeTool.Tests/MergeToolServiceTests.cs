@@ -35,7 +35,7 @@ public class MergeToolServiceTests
     [Test]
     public async Task when_uncommitted()
     {
-        await RunCommand("touch", "file.txt");
+        await File.WriteAllTextAsync("file.txt", "Hello, World!");
 
         await _mergeToolService.GitMergeInto(TargetBranch);
 
@@ -132,12 +132,12 @@ public class MergeToolServiceTests
 
         if (Directory.Exists(_sandboxDirectory))
         {
-            Directory.Delete(_sandboxDirectory, true);
+            DeleteDirectory(_sandboxDirectory);
         }
 
         if (Directory.Exists(_localRepoDirectory))
         {
-            Directory.Delete(_localRepoDirectory, true);
+            DeleteDirectory(_localRepoDirectory);
         }
     }
 
@@ -153,8 +153,9 @@ public class MergeToolServiceTests
         _previousWorkingDirectory = Directory.GetCurrentDirectory();
         Directory.SetCurrentDirectory(_localRepoDirectory);
 
+        await RunCommand("git", $"checkout -b {TargetBranch}");
         await RunCommand("git", "commit -m 'Init' --allow-empty");
-        await RunCommand("git", "push");
+        await RunCommand("git", $"push -u origin {TargetBranch}");
         await RunCommand("git", "checkout -b develop");
     }
 
@@ -185,5 +186,24 @@ public class MergeToolServiceTests
             Console.WriteLine(stderr);
 
         return $"{stdout}{stderr}";
+    }
+
+    private static void DeleteDirectory(string targetDir)
+    {
+        var files = Directory.GetFiles(targetDir);
+        var dirs = Directory.GetDirectories(targetDir);
+
+        foreach (var file in files)
+        {
+            File.SetAttributes(file, FileAttributes.Normal);
+            File.Delete(file);
+        }
+
+        foreach (var dir in dirs)
+        {
+            DeleteDirectory(dir);
+        }
+
+        Directory.Delete(targetDir, false);
     }
 }

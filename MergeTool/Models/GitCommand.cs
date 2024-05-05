@@ -18,12 +18,16 @@ public static class GitCommand
         process.Start();
         await process.WaitForExitAsync();
 
-        return new GitProcess()
+
+        var gitProcess = new GitProcess()
         {
             ExitCode = process.ExitCode,
             StandardOutput = await process.StandardOutput.ReadToEndAsync(),
             StandardError = await process.StandardError.ReadToEndAsync()
         };
+        Console.WriteLine($"> git {string.Join(" ", args)}");
+        Console.WriteLine(gitProcess.GetOutput());
+        return gitProcess;
     }
 
     public static async Task CheckUncommitted()
