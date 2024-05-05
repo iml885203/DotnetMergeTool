@@ -21,18 +21,18 @@ $aliasesScript = @"
 # MergeTool Alias - Begin
 function gmi {
     param (
-        [string]$branch
+        [string]`$branch
     )
 
-    MergeTool gmi $branch
+    MergeTool gmi `$branch
 }
 
 function gmip {
     param (
-        [string]$branch
+        [string]`$branch
     )
 
-    MergeTool gmip $branch
+    MergeTool gmip `$branch
 }
 # MergeTool Alias - End
 "@
