@@ -21,8 +21,8 @@ fi
 ALIASES=(
     ""
     "# MergeTool aliases - Begin"
-    "alias gmi=\"MergeTool gmi\""
-    "alias gmip=\"MergeTool gmip\""
+    "alias gmi=\"MergeTool\""
+    "alias gmip=\"MergeTool --push\""
     "# MergeTool aliases - End"
 )
 
