@@ -20,19 +20,11 @@ Remove-Item -Path 'MergeTool-win-x64.zip'
 $aliasesScript = @"
 # MergeTool Alias - Begin
 function gmi {
-    param (
-        [string]`$branch
-    )
-
-    MergeTool `$branch
+    MergeTool `$args
 }
 
 function gmip {
-    param (
-        [string]`$branch
-    )
-
-    MergeTool --push `$branch
+    MergeTool --push `$args
 }
 # MergeTool Alias - End
 "@
