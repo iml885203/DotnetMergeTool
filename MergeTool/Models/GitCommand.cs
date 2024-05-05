@@ -88,4 +88,12 @@ public static class GitCommand
 
         return process.GetOutput();
     }
+
+    public static async Task<List<string>> GetLocalBranches()
+    {
+        var process = await Run("for-each-ref", "--sort=-committerdate", "--format=%(refname:short)", "refs/heads/");
+        var output = process.GetOutput();
+
+        return output.Split("\n").ToList();
+    }
 }
