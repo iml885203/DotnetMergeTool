@@ -12,4 +12,4 @@ bld/
 # JetBrains Rider
 .idea/
 *.sln.iml
-
+*.sln.DotSettings.user
