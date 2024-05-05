@@ -1,5 +1,5 @@
-using MergeTool.Enums;
 using MergeTool.Interfaces;
+using Spectre.Console;
 
 namespace MergeTool.Models;
 
@@ -7,58 +7,30 @@ public class ConsoleLogger : IConsoleLogger
 {
     private bool _enableVerbose = false;
 
-    private void WriteMessage(string message, MessageType messageType)
-    {
-        switch (messageType)
-        {
-            case MessageType.Info:
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                break;
-            case MessageType.Warning:
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                break;
-            case MessageType.Error:
-                Console.ForegroundColor = ConsoleColor.Red;
-                break;
-            case MessageType.Success:
-                Console.ForegroundColor = ConsoleColor.Green;
-                break;
-            case MessageType.Verbose:
-                Console.ForegroundColor = ConsoleColor.Gray;
-                break;
-            default:
-                Console.ResetColor();
-                break;
-        }
-
-        Console.WriteLine(message);
-        Console.ResetColor();
-    }
-
     public void Info(string message)
     {
-        WriteMessage($"[Info] {message}", MessageType.Info);
+        AnsiConsole.MarkupLine($"[aqua][[Info]] {message}[/]");
     }
 
     public void Warning(string message)
     {
-        WriteMessage($"[Warning] {message}", MessageType.Warning);
+        AnsiConsole.MarkupLine($"[yellow][[Warning]] {message}[/]");
     }
 
     public void Error(string message)
     {
-        WriteMessage($"[Error] {message}", MessageType.Error);
+        AnsiConsole.MarkupLine($"[red][[Error]] {message}[/]");
     }
 
     public void Success(string message)
     {
-        WriteMessage($"[Success] {message}", MessageType.Success);
+        AnsiConsole.MarkupLine($"[green][[Success]] {message}[/]");
     }
 
     public void Verbose(string message)
     {
         if (!_enableVerbose) return;
-        WriteMessage($"[Verbose] {message}", MessageType.Verbose);
+        AnsiConsole.MarkupLine($"[gray][[Verbose]] {message}[/]");
     }
 
     public void SetEnableVerbose(bool enabled)
