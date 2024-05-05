@@ -59,6 +59,7 @@ namespace MergeTool
 
         private static async Task HandleCommand(string targetBranch, bool needPush, bool showVerbose)
         {
+            // TODO: handle .git not found
             if (string.IsNullOrEmpty(targetBranch))
             {
                 targetBranch = await PromptBranch();
@@ -84,7 +85,7 @@ namespace MergeTool
             return AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("Which branch do you want to merge into?")
-                    .PageSize(5)
+                    .PageSize(10)
                     .MoreChoicesText("[grey](Move up and down to reveal more branch)[/]")
                     .AddChoices(localBranches));
         }
