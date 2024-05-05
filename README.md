@@ -17,6 +17,8 @@ Git merge tool
   * [Linux](#linux-1)
   * [MacOS](#macos-1)
   * [Windows](#windows-1)
+- [CLI completions for MergeTool(macOS only)](#cli-completions-for-mergetoolmacos-only)
+  * [How to setup Amazon Q Autocomplete for MergeTool](#how-to-setup-amazon-q-autocomplete-for-mergetool)
 
 <!-- tocstop -->
 
@@ -68,3 +70,9 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/iml885203/DotnetMergeToo
 ```powershell
 powershell -command "& {Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/iml885203/DotnetMergeTool/main/tools/uninstall.ps1'))}"
 ```
+
+## CLI completions for MergeTool(macOS only)
+
+![](./q-autocomplete/readme/merge-tool-autocomplete.png)
+
+### [How to setup Amazon Q Autocomplete for MergeTool](./q-autocomplete/README.md)
