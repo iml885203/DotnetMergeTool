@@ -24,7 +24,7 @@ function gmi {
         [string]`$branch
     )
 
-    MergeTool gmi `$branch
+    MergeTool `$branch
 }
 
 function gmip {
@@ -32,7 +32,7 @@ function gmip {
         [string]`$branch
     )
 
-    MergeTool gmip `$branch
+    MergeTool --push `$branch
 }
 # MergeTool Alias - End
 "@
