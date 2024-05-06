@@ -5,7 +5,7 @@ namespace MergeTool.Services;
 
 public class MergeToolService(IConsoleLogger consoleLogger)
 {
-    private bool _verbose = false;
+    private bool _verbose;
 
     public async Task GitMergeInto(string targetBranch, bool verbose = false)
     {
@@ -17,6 +17,11 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         }
         catch (GitCommandFailed e)
         {
+            if (!string.IsNullOrEmpty(e.Output))
+            {
+                consoleLogger.Warning(e.Output);
+            }
+
             consoleLogger.Error(e.ErrorMessage);
             await GitCommand.Run("checkout", originalBranch);
         }
@@ -32,6 +37,10 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         }
         catch (GitCommandFailed e)
         {
+            if (!string.IsNullOrEmpty(e.Output))
+            {
+                consoleLogger.Warning(e.Output);
+            }
             consoleLogger.Error(e.ErrorMessage);
             await GitCommand.Run("checkout", originalBranch);
         }
@@ -83,7 +92,7 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         consoleLogger.Success($"Merged the '{originalBranch}' branch into '{targetBranch}' branch.");
     }
 
-    private void ConsoleVerbose(string fetch)
+    private void ConsoleVerbose(string? fetch)
     {
         if (_verbose)
         {

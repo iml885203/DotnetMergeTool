@@ -42,36 +42,32 @@ public static class GitCommand
     public static async Task<string> Fetch(string targetBranch)
     {
         var process = await Run("fetch", "origin", targetBranch);
+        var output = process.GetOutput();
         if (process.IsFailed())
-            throw new GitCommandFailed($"Failed to fetch the '{targetBranch}' branch.");
-        return process.GetOutput();
+            throw new GitCommandFailed($"Failed to fetch the '{targetBranch}' branch.", output);
+        return output;
     }
 
     public static async Task<string> ResetHard(string targetBranch)
     {
         var process = await Run("reset", "--hard", $"origin/{targetBranch}");
+        var output = process.GetOutput();
         if (process.IsFailed())
-            throw new GitCommandFailed($"Failed to reset the '{targetBranch}' branch.");
-        return process.GetOutput();
+            throw new GitCommandFailed($"Failed to reset the '{targetBranch}' branch.", output);
+        return output;
     }
 
     public static async Task<string> Merge(string originalBranch, string targetBranch)
     {
         var process = await Run("merge", originalBranch);
-        if (process.IsFailed())
-        {
-            await Run("merge", "--abort");
-            if (process.GetTrimStandardOutput().Contains("CONFLICT"))
-            {
-                throw new GitCommandFailed($"Merge conflict detected for branch '{targetBranch}'.");
-            }
-            else
-            {
-                throw new GitCommandFailed($"Merge failed for branch '{targetBranch}'.");
-            }
-        }
+        var output = process.GetOutput();
 
-        return process.GetOutput();
+        if (!process.IsFailed()) return output;
+
+        await Run("merge", "--abort");
+        throw process.GetTrimStandardOutput().Contains("CONFLICT")
+            ? new GitCommandFailed($"Merge conflict detected for branch '{targetBranch}'.", output)
+            : new GitCommandFailed($"Merge failed for branch '{targetBranch}'.", output);
     }
 
     public static async Task<string> GetOriginalBranch()
@@ -83,10 +79,11 @@ public static class GitCommand
     public static async Task<string> Push(string targetBranch)
     {
         var process = await Run("push", "origin", targetBranch);
+        var output = process.GetOutput();
         if (process.IsFailed())
-            throw new GitCommandFailed($"Failed to push the '{targetBranch}' branch.");
+            throw new GitCommandFailed($"Failed to push the '{targetBranch}' branch.", output);
 
-        return process.GetOutput();
+        return output;
     }
 
     public static async Task<List<string>> GetLocalBranches()

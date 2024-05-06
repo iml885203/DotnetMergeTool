@@ -87,7 +87,7 @@ public class MergeToolServiceTests
     }
 
     [Test]
-    public async Task show_verbose_when_error_occurs()
+    public async Task show_warning_when_error_occurs()
     {
         const string fileName = "file.txt";
         await GivenFileOnTargetBranch(fileName, "Hello, World!");
@@ -95,8 +95,8 @@ public class MergeToolServiceTests
 
         await _mergeToolService.GitMergeInto(TargetBranch);
 
-        _consoleLogger.Received().Verbose(Arg.Any<string>());
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
+        _consoleLogger.Received().Warning(Arg.Any<string>());
         _consoleLogger.Received().Error($"Merge conflict detected for branch '{TargetBranch}'.");
         await CurrentBranchShouldBe(OriginalBranch);
     }
