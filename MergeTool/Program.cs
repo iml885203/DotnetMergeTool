@@ -59,7 +59,12 @@ namespace MergeTool
 
         private static async Task HandleCommand(string targetBranch, bool needPush, bool showVerbose)
         {
-            // TODO: show verbose output when error occurs
+            if (await GitCommand.IsGitExist())
+            {
+                AnsiConsole.MarkupLine("[red]Git is not found![/]");
+                return;
+            }
+
             if (string.IsNullOrEmpty(targetBranch))
             {
                 targetBranch = await PromptBranch();

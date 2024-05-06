@@ -77,16 +77,6 @@ public class MergeToolServiceTests
     }
 
     [Test]
-    public async Task when_git_not_found()
-    {
-        DeleteDirectory(".git");
-
-        await _mergeToolService.GitMergeInto(TargetBranch);
-
-        _consoleLogger.Received().Error("Git is not installed or not found in the PATH.");
-    }
-
-    [Test]
     public async Task show_warning_when_error_occurs()
     {
         const string fileName = "file.txt";

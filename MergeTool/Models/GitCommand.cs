@@ -94,17 +94,15 @@ public static class GitCommand
         return output.Split("\n").ToList();
     }
 
-    public static async Task CheckGitExists()
-    {
-        var process = await Run("rev-parse", "--is-inside-work-tree");
-        if (process.IsFailed())
-            throw new GitCommandFailed("Git is not installed or not found in the PATH.");
-    }
-
     public static async Task CheckBranchExists(string targetBranch)
     {
         var process = await Run("rev-parse", "--verify", targetBranch);
         if (process.IsFailed())
             throw new GitCommandFailed($"The '{targetBranch}' branch does not exist.");
+    }
+
+    public static async Task<bool> IsGitExist()
+    {
+        return !(await Run("rev-parse", "--is-inside-work-tree")).IsFailed();
     }
 }
