@@ -78,6 +78,15 @@ public class MergeToolServiceTests
     }
 
     [Test]
+    public async Task when_git_not_found()
+    {
+        await _mergeToolService.GitMergeInto(TargetBranch);
+
+        _consoleLogger.Received().Error("Git is not installed or not found in the PATH.");
+        await CurrentBranchShouldBe(OriginalBranch);
+    }
+
+    [Test]
     public async Task should_be_merge_into_target()
     {
         await GivenFileOnOriginalBranch("new-file.txt", "This is a new file!");
