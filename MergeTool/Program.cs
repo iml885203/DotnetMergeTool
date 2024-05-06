@@ -65,6 +65,7 @@ namespace MergeTool
                 targetBranch = await PromptBranch();
             }
 
+            _mergeToolService!.EnableVerbose(showVerbose);
             if (needPush)
             {
                 await _mergeToolService!.GitMergeIntoPush(targetBranch, showVerbose);
