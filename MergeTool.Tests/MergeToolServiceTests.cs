@@ -53,13 +53,12 @@ public class MergeToolServiceTests
     }
 
     [Test]
-    public async Task when_fetch_fail()
+    public async Task when_target_not_found()
     {
         const string targetBranch = "non_existent";
         await _mergeToolService.GitMergeInto(targetBranch);
 
-        _consoleLogger.Received().Info($"Pulling changes from '{targetBranch}' branch...");
-        _consoleLogger.Received().Error($"Failed to fetch the '{targetBranch}' branch.");
+        _consoleLogger.Received().Error($"The '{targetBranch}' branch does not exist.");
         await CurrentBranchShouldBe(OriginalBranch);
     }
 
