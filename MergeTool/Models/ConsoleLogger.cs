@@ -5,8 +5,6 @@ namespace MergeTool.Models;
 
 public class ConsoleLogger : IConsoleLogger
 {
-    private bool _enableVerbose = false;
-
     public void Info(string message)
     {
         AnsiConsole.MarkupLine($"[aqua][[Info]] {message}[/]");
@@ -29,12 +27,6 @@ public class ConsoleLogger : IConsoleLogger
 
     public void Verbose(string message)
     {
-        if (!_enableVerbose) return;
         AnsiConsole.MarkupLine($"[gray][[Verbose]] {message}[/]");
-    }
-
-    public void SetEnableVerbose(bool enabled)
-    {
-        _enableVerbose = enabled;
     }
 }

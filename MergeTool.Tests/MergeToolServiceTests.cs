@@ -53,13 +53,12 @@ public class MergeToolServiceTests
     }
 
     [Test]
-    public async Task when_fetch_fail()
+    public async Task when_target_not_found()
     {
         const string targetBranch = "non_existent";
         await _mergeToolService.GitMergeInto(targetBranch);
 
-        _consoleLogger.Received().Info($"Pulling changes from '{targetBranch}' branch...");
-        _consoleLogger.Received().Error($"Failed to fetch the '{targetBranch}' branch.");
+        _consoleLogger.Received().Error($"The '{targetBranch}' branch does not exist.");
         await CurrentBranchShouldBe(OriginalBranch);
     }
 
@@ -73,6 +72,21 @@ public class MergeToolServiceTests
         await _mergeToolService.GitMergeInto(TargetBranch);
 
         _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
+        _consoleLogger.Received().Error($"Merge conflict detected for branch '{TargetBranch}'.");
+        await CurrentBranchShouldBe(OriginalBranch);
+    }
+
+    [Test]
+    public async Task show_warning_when_error_occurs()
+    {
+        const string fileName = "file.txt";
+        await GivenFileOnTargetBranch(fileName, "Hello, World!");
+        await GivenFileOnOriginalBranch(fileName, "This is a conflict!");
+
+        await _mergeToolService.GitMergeInto(TargetBranch);
+
+        _consoleLogger.Received().Info($"Pulling changes from '{TargetBranch}' branch...");
+        _consoleLogger.Received().Warning(Arg.Any<string>());
         _consoleLogger.Received().Error($"Merge conflict detected for branch '{TargetBranch}'.");
         await CurrentBranchShouldBe(OriginalBranch);
     }

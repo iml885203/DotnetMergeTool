@@ -5,9 +5,10 @@ namespace MergeTool.Services;
 
 public class MergeToolService(IConsoleLogger consoleLogger)
 {
+    private bool _verbose;
+
     public async Task GitMergeInto(string targetBranch, bool verbose = false)
     {
-        consoleLogger.SetEnableVerbose(verbose);
         var originalBranch = await GitCommand.GetOriginalBranch();
 
         try
@@ -16,6 +17,11 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         }
         catch (GitCommandFailed e)
         {
+            if (!string.IsNullOrEmpty(e.Output))
+            {
+                consoleLogger.Warning(e.Output);
+            }
+
             consoleLogger.Error(e.ErrorMessage);
             await GitCommand.Run("checkout", originalBranch);
         }
@@ -23,7 +29,6 @@ public class MergeToolService(IConsoleLogger consoleLogger)
 
     public async Task GitMergeIntoPush(string targetBranch, bool verbose = false)
     {
-        consoleLogger.SetEnableVerbose(verbose);
         var originalBranch = await GitCommand.GetOriginalBranch();
 
         try
@@ -32,6 +37,10 @@ public class MergeToolService(IConsoleLogger consoleLogger)
         }
         catch (GitCommandFailed e)
         {
+            if (!string.IsNullOrEmpty(e.Output))
+            {
+                consoleLogger.Warning(e.Output);
+            }
             consoleLogger.Error(e.ErrorMessage);
             await GitCommand.Run("checkout", originalBranch);
         }
@@ -43,14 +52,15 @@ public class MergeToolService(IConsoleLogger consoleLogger)
             throw new GitCommandFailed($"Cannot merge the '{originalBranch}' into '{targetBranch}' branch.");
 
         await GitCommand.CheckUncommitted();
+        await GitCommand.CheckBranchExists(targetBranch);
 
         consoleLogger.Info($"Pulling changes from '{targetBranch}' branch...");
         await GitCommand.Checkout(targetBranch);
-        consoleLogger.Verbose(await GitCommand.Fetch(targetBranch));
-        consoleLogger.Verbose(await GitCommand.ResetHard(targetBranch));
+        ConsoleVerbose(await GitCommand.Fetch(targetBranch));
+        ConsoleVerbose(await GitCommand.ResetHard(targetBranch));
 
         consoleLogger.Info($"Merging changes from '{originalBranch}' to '{targetBranch}' branch...");
-        consoleLogger.Verbose(await GitCommand.Merge(originalBranch, targetBranch));
+        ConsoleVerbose(await GitCommand.Merge(originalBranch, targetBranch));
         await GitCommand.Checkout(originalBranch);
 
         consoleLogger.Success($"Merged the '{originalBranch}' branch into '{targetBranch}' branch.");
@@ -62,25 +72,34 @@ public class MergeToolService(IConsoleLogger consoleLogger)
             throw new GitCommandFailed($"Cannot merge the '{originalBranch}' into '{targetBranch}' branch.");
 
         await GitCommand.CheckUncommitted();
+        await GitCommand.CheckBranchExists(targetBranch);
 
         consoleLogger.Info($"Pulling changes from '{targetBranch}' branch...");
         await GitCommand.Checkout(targetBranch);
-        consoleLogger.Verbose(await GitCommand.Fetch(targetBranch));
-        consoleLogger.Verbose(await GitCommand.ResetHard(targetBranch));
+        var fetch = await GitCommand.Fetch(targetBranch);
+        ConsoleVerbose(fetch);
+        ConsoleVerbose(await GitCommand.ResetHard(targetBranch));
 
         consoleLogger.Info($"Merging changes from '{originalBranch}' to '{targetBranch}' branch...");
-        consoleLogger.Verbose(await GitCommand.Merge(originalBranch, targetBranch));
+        ConsoleVerbose(await GitCommand.Merge(originalBranch, targetBranch));
 
         consoleLogger.Info($"Pushing changes to '{targetBranch}' branch...");
-        consoleLogger.Verbose(await GitCommand.Push(targetBranch));
+        ConsoleVerbose(await GitCommand.Push(targetBranch));
         await GitCommand.Checkout(originalBranch);
 
         consoleLogger.Success($"Merged the '{originalBranch}' branch into '{targetBranch}' branch.");
     }
 
-    public async Task TestInfo()
+    private void ConsoleVerbose(string? fetch)
     {
-        consoleLogger.Info("1");
-        consoleLogger.Info("2");
+        if (_verbose)
+        {
+            consoleLogger.Verbose(fetch);
+        }
+    }
+
+    public void EnableVerbose(bool showVerbose)
+    {
+        _verbose = showVerbose;
     }
 }

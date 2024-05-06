@@ -7,5 +7,4 @@ public interface IConsoleLogger
     void Error(string message);
     void Success(string message);
     void Verbose(string message);
-    void SetEnableVerbose(bool enabled);
 }
