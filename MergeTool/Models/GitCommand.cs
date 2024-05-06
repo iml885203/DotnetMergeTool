@@ -103,4 +103,11 @@ public static class GitCommand
         if (process.IsFailed())
             throw new GitCommandFailed("Git is not installed or not found in the PATH.");
     }
+
+    public static async Task CheckBranchExists(string targetBranch)
+    {
+        var process = await Run("rev-parse", "--verify", targetBranch);
+        if (process.IsFailed())
+            throw new GitCommandFailed($"The '{targetBranch}' branch does not exist.");
+    }
 }
