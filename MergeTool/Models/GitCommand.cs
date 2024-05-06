@@ -96,4 +96,11 @@ public static class GitCommand
 
         return output.Split("\n").ToList();
     }
+
+    public static async Task CheckGitExists()
+    {
+        var process = await Run("rev-parse", "--is-inside-work-tree");
+        if (process.IsFailed())
+            throw new GitCommandFailed("Git is not installed or not found in the PATH.");
+    }
 }

@@ -43,6 +43,7 @@ public class MergeToolService(IConsoleLogger consoleLogger)
             throw new GitCommandFailed($"Cannot merge the '{originalBranch}' into '{targetBranch}' branch.");
 
         await GitCommand.CheckUncommitted();
+        await GitCommand.CheckGitExists();
 
         consoleLogger.Info($"Pulling changes from '{targetBranch}' branch...");
         await GitCommand.Checkout(targetBranch);
