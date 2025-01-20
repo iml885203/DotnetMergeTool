@@ -1,10 +1,19 @@
 # Merge Tool
 
-Git merge tool
+A powerful Git branch merging tool that makes your merge workflow smoother and safer.
 
 ![](./readme/demo.gif)
 
 ![](./readme/gmip-demo.gif)
+
+## Features 
+
+- Smart branch merging
+- Enhanced error handling
+- Auto-rollback to original branch on errors
+- Quick push option support
+- Cross-platform support (Linux, MacOS, Windows)
+- Amazon Q autocomplete (MacOS only)
 
 ## Table of Contents
 
@@ -23,19 +32,21 @@ Git merge tool
   * [See More...](#see-more)
 - [CLI completions (macOS only)](#cli-completions-macos-only)
   * [How to setup Amazon Q Autocomplete for MergeTool](#how-to-setup-amazon-q-autocomplete-for-mergetool)
+- [Contributing](#contributing)
+- [License](#license)
 
 <!-- tocstop -->
 
 ## Usage
 ```bash
-MergeTool {branch}
-MergeTool {branch} --push
+MergeTool {branch}           # Merge specified branch
+MergeTool {branch} --push    # Merge and push to remote
 ```
 
-Or you can use the alias:
+Aliases:
 ```bash
-gmi {branch}
-gmip {branch}
+gmi {branch}    # Same as MergeTool {branch}
+gmip {branch}   # Same as MergeTool {branch} --push
 ```
 
 ## Installation
@@ -77,9 +88,12 @@ powershell -command "& {Invoke-Expression ((New-Object System.Net.WebClient).Dow
 
 ## Why need Merge Tool?
 
-**Merge Tool is more user-friendly and has a better error handling mechanism.**
+Merge Tool offers the following advantages:
 
-It will checkout back to your original branch when an error occurs.
+- More user-friendly interface
+- Robust error handling mechanism
+- Auto-rollback feature to prevent stuck states after merge failures
+- Improved development efficiency and code quality
 
 ### [See More...](./why-need-merge-tool.md)
 
@@ -88,3 +102,17 @@ It will checkout back to your original branch when an error occurs.
 ![](./q-autocomplete/readme/merge-tool-autocomplete.png)
 
 ### [How to setup Amazon Q Autocomplete for MergeTool](./q-autocomplete/README.md)
+
+## Contributing
+
+We welcome Pull Requests to improve this tool! Here's how to contribute:
+
+1. Fork this project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
